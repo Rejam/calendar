@@ -1,14 +1,14 @@
 export default [
   {
     type: 2,
-    start: "2019 Feb 19 07:25",
-    end: "2019 Feb 20 08:55",
+    start: "2019 Feb 18 10:30",
+    end: "2019 Feb 18 11:30",
     name: "English"
   },
   {
     type: 2,
-    start: "2019 Feb 18 10:30",
-    end: "2019 Feb 18 11:30",
+    start: "2019 Feb 22 09:45",
+    end: "2019 Feb 22 11:30",
     name: "English"
   },
   {
@@ -124,6 +124,12 @@ export default [
     type: 1,
     start: "2019 Feb 22 10:30",
     end: "2019 Feb 22 11:30",
+    name: "English"
+  },
+  {
+    type: 1,
+    start: "2019 Feb 22 10:45",
+    end: "2019 Feb 22 11:45",
     name: "English"
   },
   { type: 3, start: "2019 Feb 22 15:30", end: "2019 Feb 22 15:00", name: "IT" }

@@ -16,13 +16,13 @@ const Day = ({ events = [], day }) => {
     const matchedStackIndex = stackedEvents.findIndex(ev =>
       haveSameStartAndEnd(ev, event)
     )
-    function addToExistingStack(stacks, ev, i) {
-      stacks[i].stack.push(ev)
-      return stacks
+    function addToExistingStack(stacked, ev, i) {
+      stacked[i].stack.push(ev)
+      return stacked
     }
-    function addNewStack(stacks, ev) {
+    function addNewStack(stacked, ev) {
       const { start, end } = ev
-      return [...stacks, { start, end, stack: [ev] }]
+      return [...stacked, { start, end, stack: [ev] }]
     }
     return matchedStackIndex >= 0
       ? addToExistingStack(stackedEvents, event, matchedStackIndex)
@@ -33,7 +33,10 @@ const Day = ({ events = [], day }) => {
     event.offset = 0
     // check if started bewteen start and end of earlier events
     allEvents.slice(0, i).forEach(prevEvent => {
-      event.offset += getTime(prevEvent.end) > getTime(event.start) ? 1 : 0
+      event.offset =
+        getTime(prevEvent.end) > getTime(event.start)
+          ? prevEvent.offset + 1
+          : event.offset
     })
     return event
   }
