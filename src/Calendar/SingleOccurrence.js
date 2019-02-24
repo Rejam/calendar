@@ -1,5 +1,5 @@
 import React from "react"
-import { singleEventStyle } from "./styles"
+import { eventStyle, singleEventStyle } from "./styles"
 
 const parseTime = date =>
   new Date(date)
@@ -11,7 +11,7 @@ const parseTime = date =>
 const SingleOccurrence = ({ event }) => {
   const [ev] = event.stack
   return (
-    <div style={singleEventStyle(ev, event.offset)}>
+    <div style={{ ...eventStyle(ev, event.offset), ...singleEventStyle(ev) }}>
       {ev.name}
       <br />
       {parseTime(ev.start)}

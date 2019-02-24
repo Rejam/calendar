@@ -2,45 +2,38 @@ import React from "react"
 import SingleOccurrence from "./SingleOccurrence"
 import MultiOccurrence from "./MultiOccurrence"
 import { dayStyle, dayHeaderStyle, hourStyle } from "./styles"
-import { HOURS, ROWS } from "./constants"
+import { HOURS, ROWS } from "./helpers"
 
 const Day = ({ events = [], day }) => {
   const getTime = date => new Date(date).getTime()
-
   const orderByStartTime = (ev1, ev2) => getTime(ev1.start) - getTime(ev2.start)
 
-  const stackEvents = (stackedEvents, event) => {
-    // check if starts and ends same as any later events
-    const { start, end } = event
-    const timesMatch = (t1, t2) => getTime(t1) === getTime(t2)
+  function stackEvents(stackedEvents, event) {
     const haveSameStartAndEnd = (ev1, ev2) =>
-      timesMatch(ev1.start, ev2.start) && timesMatch(ev1.end, ev2.end)
-    const matchingStackExists = (acc, event) =>
-      acc.some(ev => haveSameStartAndEnd(event, ev))
-    const addToExistingStack = (stacked, e) => {
-      stacked.find(ev => haveSameStartAndEnd(e, ev)).stack.push(e)
-      return stacked
+      getTime(ev1.start) === getTime(ev2.start) &&
+      getTime(ev1.end) === getTime(ev2.end)
+    // check if start and end match any stacked events
+    const matchedStackIndex = stackedEvents.findIndex(ev =>
+      haveSameStartAndEnd(ev, event)
+    )
+    function addToExistingStack(stacks, ev, i) {
+      stacks[i].stack.push(ev)
+      return stacks
     }
-    const newStack = {
-      start,
-      end,
-      stack: [event]
+    function addNewStack(stacks, ev) {
+      const { start, end } = ev
+      return [...stacks, { start, end, stack: [ev] }]
     }
-
-    return matchingStackExists(stackedEvents, event)
-      ? addToExistingStack(stackedEvents, event)
-      : [...stackedEvents, newStack]
+    return matchedStackIndex >= 0
+      ? addToExistingStack(stackedEvents, event, matchedStackIndex)
+      : addNewStack(stackedEvents, event)
   }
 
-  const addOffset = (event, i, allEvents) => {
+  function addOffset(event, i, allEvents) {
     event.offset = 0
-    // check if started bewteen start and end of any prev events
-    const prevEvents = allEvents.slice(0, i)
-    prevEvents.forEach(prevEvent => {
-      event.offset =
-        getTime(prevEvent.end) > getTime(event.start)
-          ? event.offset + 1
-          : event.offset
+    // check if started bewteen start and end of earlier events
+    allEvents.slice(0, i).forEach(prevEvent => {
+      event.offset += getTime(prevEvent.end) > getTime(event.start) ? 1 : 0
     })
     return event
   }
@@ -55,7 +48,7 @@ const Day = ({ events = [], day }) => {
       <h5>{day}</h5>
     </div>
   )
-  const HourPanels = () => HOURS.map((hr, i) => <div style={hourStyle(hr)} />)
+  const HourMarkers = () => HOURS.map((hr, i) => <div style={hourStyle(hr)} />)
   const Events = ({ events }) =>
     events.map((ev, i) =>
       ev.stack.length > 1 ? (
@@ -68,7 +61,7 @@ const Day = ({ events = [], day }) => {
   return (
     <div style={dayStyle(ROWS)}>
       <DayHeader day={day} />
-      <HourPanels />
+      <HourMarkers />
       <Events events={stackedEvents} />
     </div>
   )

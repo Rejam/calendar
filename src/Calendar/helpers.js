@@ -18,3 +18,9 @@ export const DAYS = [
   "Sunday"
 ]
 export const COLS = `${DAYS.map(d => `[${d}] 2fr`).join(" ")} [Time] 1fr`
+
+export const parseTime = date =>
+  new Date(date)
+    .toLocaleTimeString()
+    .split(":")
+    .slice(0, 2)

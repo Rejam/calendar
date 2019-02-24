@@ -1,6 +1,6 @@
 import React from "react"
 import { dayStyle, timeStyle, timeLineStyle } from "./styles"
-import { HOURS, ROWS } from "./constants"
+import { HOURS, ROWS, parseTime } from "./helpers"
 
 class Time extends React.Component {
   componentDidMount() {
@@ -10,22 +10,18 @@ class Time extends React.Component {
   }
 
   render() {
+    const pad = num => (num < 10 ? `0${num}` : `${num}`)
+    const [hr, min] = parseTime(Date())
+    const roundedMin = parseInt(min, 10) - (parseInt(min, 10) % 5)
+    const time = [pad(hr), pad(roundedMin)].join("")
+
     const TimeColumn = () =>
       HOURS.map(hr => (
         <div id={`time${hr}`} style={timeStyle(hr)}>
           {hr}:00
         </div>
       ))
-
-    let [hr, min] = new Date()
-      .toLocaleTimeString()
-      .split(":")
-      .slice(0, 2)
-    min = parseInt(min, 10) - (parseInt(min, 10) % 5)
-    const pad = num => (num < 10 ? `0${num}` : `${num}`)
-
     const TimeLine = ({ time }) => <div style={timeLineStyle(time)} />
-    const time = [pad(hr), pad(min)].join("")
     return (
       <div style={dayStyle(ROWS)}>
         <TimeLine time={time} />

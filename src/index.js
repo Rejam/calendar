@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import "./App.css"
+import "./main.css"
 import Calendar from "./Calendar/Calendar"
 import events from "./eventsData"
 

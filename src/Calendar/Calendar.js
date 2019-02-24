@@ -3,7 +3,7 @@ import moment from "moment"
 import Day from "./Day"
 import Time from "./Time"
 import { calendarStyle } from "./styles"
-import { COLS, DAYS } from "./constants"
+import { COLS, DAYS } from "./helpers"
 
 const Calendar = ({ events }) => {
   const sortEventsByDay = (obj, ev) => {
