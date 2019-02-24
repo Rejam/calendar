@@ -1,9 +1,30 @@
 export default [
   {
     type: 2,
+    start: "2019 Feb 23 10:30",
+    end: "2019 Feb 23 11:30",
+    name: "Trip",
+    allDay: true
+  },
+  {
+    type: 2,
     start: "2019 Feb 18 10:30",
     end: "2019 Feb 18 11:30",
-    name: "English"
+    name: "Maths deadline",
+    allDay: true
+  },
+  {
+    type: 2,
+    start: "2019 Feb 18 10:30",
+    end: "2019 Feb 18 11:30",
+    name: "English",
+    allDay: true
+  },
+  {
+    type: 2,
+    start: "2019 Feb 22 11:30",
+    end: "2019 Feb 22 12:30",
+    name: "PE"
   },
   {
     type: 2,

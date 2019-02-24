@@ -6,7 +6,8 @@ class Time extends React.Component {
   componentDidMount() {
     const { dayStart } = this.props
     const start = document.querySelector(`#time${dayStart}`)
-    window.scrollTo(0, start.offsetTop - 100)
+    const head = document.querySelector(".dayHeader")
+    window.scrollTo(0, start.offsetTop - head.clientHeight - 100)
   }
 
   render() {

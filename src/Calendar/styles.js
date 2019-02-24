@@ -18,6 +18,7 @@ export const dayStyle = (rows, isTimeCol) => ({
 
 export const dayHeaderStyle = {
   gridColumn: "1 / span 5",
+  display: "grid",
   position: "sticky",
   top: "0px",
 
